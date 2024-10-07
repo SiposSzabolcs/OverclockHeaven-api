@@ -4,7 +4,11 @@ import com.example.OverclockHeaven.global.CustomExceptions;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 @Service
@@ -13,6 +17,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final CommentRepository commentRepository;
+    private final ImageService imageService;
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
@@ -22,7 +27,10 @@ public class ProductService {
         return productRepository.findByTag(tag);
     }
 
-    public Product createProduct(Product product){
+    public Product createProduct(Product product, MultipartFile imageFile) throws Exception {
+        String imageUrl = imageService.uploadImage(imageFile);
+        product.setImgUrl(imageUrl);
+
         return productRepository.save(product);
     }
 
@@ -59,7 +67,9 @@ public class ProductService {
                 product.getId(),
                 product.getName(),
                 product.getTag(),
-                product.getPrice()
+                product.getPrice(),
+                product.getDescription(),
+                product.getImgUrl()
         );
     }
 }

@@ -6,6 +6,7 @@ import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -37,11 +38,20 @@ public class ProductResource {
 
     }
 
-
     @PostMapping("/add")
-    public ResponseEntity<?> createProduct(@RequestBody Product product) {
-        try{
-            return ResponseEntity.created(URI.create("/products/" + product.getId())).body(productService.createProduct(product));
+    public ResponseEntity<?> createProduct(
+            @RequestParam("file") MultipartFile imageFile,
+            @RequestParam("name") String name,
+            @RequestParam("price") Double price,
+            @RequestParam("tag") String tag) {
+        try {
+            Product product = new Product();
+            product.setName(name);
+            product.setPrice(price);
+            product.setTag(tag);
+
+            Product createdProduct = productService.createProduct(product, imageFile);
+            return ResponseEntity.created(URI.create("/products/" + createdProduct.getId())).body(createdProduct);
         } catch (Exception e) {
             ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

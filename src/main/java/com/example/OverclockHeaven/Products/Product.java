@@ -21,7 +21,9 @@ public class Product {
     private Integer id;
 
     private String name;
+    private String description;
     private String tag;
+    private String imgUrl;
     private Number price;
     @ElementCollection
     private List<Integer> ratings = new ArrayList<>();
