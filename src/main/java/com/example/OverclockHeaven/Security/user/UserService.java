@@ -30,18 +30,18 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomExceptions.UserNotFoundException(id));
 
-        return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail());
+        return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getRole());
     }
 
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomExceptions.UserNotFoundExceptionString(email));
 
-        return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail());
+        return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getRole());
     }
 
     public UserDTO mapToDTO(User user) {
-        return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail());
+        return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail(), user.getRole());
     }
 
 }

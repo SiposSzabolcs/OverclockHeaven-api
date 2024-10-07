@@ -2,9 +2,9 @@ package com.example.OverclockHeaven.global;
 
 public class CustomExceptions {
 
-    public static class TrainerNotFoundException extends RuntimeException {
-        public TrainerNotFoundException(Integer id){
-            super("No trainer found with id: " + id);
+    public static class ProductNotFoundException extends RuntimeException {
+        public ProductNotFoundException(Integer id){
+            super("No product found with id: " + id);
         }
     }
 
