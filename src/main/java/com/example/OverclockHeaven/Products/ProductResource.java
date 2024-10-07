@@ -2,6 +2,7 @@ package com.example.OverclockHeaven.Products;
 
 import com.example.OverclockHeaven.global.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,23 @@ public class ProductResource {
         return ResponseEntity.ok().body(productService.getAllProducts());
     }
 
+    @GetMapping("/get/{tag}")
+    public ResponseEntity<List> getProducts(@PathVariable(value = "tag") String tag){
+        return ResponseEntity.ok().body(productService.getProductByTag(tag));
+    }
+
+    @PostMapping("/rate/{id}")
+    public ResponseEntity<?> rateProduct(@PathVariable(value="id") Integer id, @RequestBody Integer rating){
+        try{
+            return ResponseEntity.ok().body(productService.rateProduct(rating, id));
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+    }
+
+
     @PostMapping("/add")
     public ResponseEntity<?> createProduct(@RequestBody Product product) {
         try{
@@ -30,7 +48,7 @@ public class ProductResource {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/remove/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Integer id) {
         try {
             ProductDTO deletedProductDTO = productService.deleteProduct(id);

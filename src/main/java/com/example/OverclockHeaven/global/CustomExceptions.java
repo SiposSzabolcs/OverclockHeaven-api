@@ -20,9 +20,9 @@ public class CustomExceptions {
         }
     }
 
-    public static class RouteIdNotFoundException extends RuntimeException {
-        public RouteIdNotFoundException(Integer id){
-            super("No route found with id in the list: " + id);
+    public static class RatingException extends RuntimeException {
+        public RatingException(){
+            super("Rating must be in range of 0-5");
         }
     }
 
