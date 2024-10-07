@@ -27,5 +27,5 @@ public class Product {
     private List<Integer> ratings = new ArrayList<>();
 
     @ElementCollection
-    private List<String> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 }

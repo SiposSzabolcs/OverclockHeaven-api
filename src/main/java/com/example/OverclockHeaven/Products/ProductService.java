@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CommentRepository commentRepository;
 
     public List<Product> getAllProducts(){
         return productRepository.findAll();
@@ -36,6 +37,18 @@ public class ProductService {
         product.getRatings().add(rating);
         productRepository.save(product);
         return product;
+    }
+
+    public Product addComment(Comment comment, Integer productId){
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomExceptions.ProductNotFoundException(productId));
+
+        comment.setProductId(productId);
+
+        commentRepository.save(comment);
+
+        product.getComments().add(comment);
+        return productRepository.save(product);
     }
 
     public ProductDTO deleteProduct(Integer id){

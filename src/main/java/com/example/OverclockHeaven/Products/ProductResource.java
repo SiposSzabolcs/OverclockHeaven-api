@@ -48,6 +48,16 @@ public class ProductResource {
         }
     }
 
+    @PostMapping("/comment/{id}")
+    public ResponseEntity<?> commentOnProduct(@RequestBody Comment comment, @PathVariable(value="id") Integer id){
+        try{
+            return ResponseEntity.ok().body(productService.addComment(comment, id));
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Integer id) {
         try {
