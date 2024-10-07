@@ -53,6 +53,22 @@ public class UserService {
         return mapToDTO(user);
     }
 
+    public UserDTO completePurchase (Integer id){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CustomExceptions.UserNotFoundException(id));
+
+        if (user.getCart().isEmpty()){
+            throw new CustomExceptions.CartIsEmptyException();
+        }
+
+        user.getPurchaseHistory().addAll(user.getCart());
+
+        user.getCart().clear();
+
+        userRepository.save(user);
+        return mapToDTO(user);
+    }
+
     public UserDTO getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomExceptions.UserNotFoundExceptionString(email));

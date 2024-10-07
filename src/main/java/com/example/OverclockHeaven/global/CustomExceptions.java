@@ -32,9 +32,9 @@ public class CustomExceptions {
         }
     }
 
-    public static class PokemonNotInPartyException extends RuntimeException {
-        public PokemonNotInPartyException(String name){
-            super(name + " Not in party or box");
+    public static class CartIsEmptyException extends RuntimeException{
+        public CartIsEmptyException(){
+            super("No items in cart.");
         }
     }
 
