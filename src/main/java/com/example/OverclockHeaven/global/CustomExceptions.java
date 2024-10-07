@@ -26,9 +26,9 @@ public class CustomExceptions {
         }
     }
 
-    public static class NonValidPokemonException extends RuntimeException {
-        public NonValidPokemonException(String name){
-            super("No pokemon with name: " + name);
+    public static class DuplicateInCartException extends RuntimeException {
+        public DuplicateInCartException(){
+            super("Item already in cart.");
         }
     }
 

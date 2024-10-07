@@ -1,5 +1,6 @@
 package com.example.OverclockHeaven.Security.user;
 
+import com.example.OverclockHeaven.Products.Product;
 import com.example.OverclockHeaven.global.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,11 +31,22 @@ public class UserResource {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
     @PostMapping("/email")
     public ResponseEntity<?> getTrainerByEmail(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
         try {
             return ResponseEntity.ok().body(userService.getUserByEmail(email));
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PostMapping("{id}/cart/add")
+    public ResponseEntity<?> getTrainerByEmail(@RequestBody Integer productId, @PathVariable(value = "id") Integer id) {
+        try {
+            return ResponseEntity.ok().body(userService.addProductToCart(productId, id));
         } catch (Exception e) {
             ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

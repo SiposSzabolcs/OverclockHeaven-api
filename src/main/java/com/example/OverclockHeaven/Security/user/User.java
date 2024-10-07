@@ -1,11 +1,14 @@
 package com.example.OverclockHeaven.Security.user;
 
+import com.example.OverclockHeaven.Products.Product;
+import com.example.OverclockHeaven.Products.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,7 +30,11 @@ public class User implements UserDetails {
     private String password;
     private Role role;
 
+    @ElementCollection
+    private List<Product> cart = new ArrayList<>();
 
+    @ElementCollection
+    private List<Product> purchaseHistory = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
