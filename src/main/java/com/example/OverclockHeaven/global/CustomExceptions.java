@@ -38,6 +38,12 @@ public class CustomExceptions {
         }
     }
 
+    public static class NotInCartException extends RuntimeException{
+        public NotInCartException(){
+            super("Item not in cart.");
+        }
+    }
+
 }
 
 

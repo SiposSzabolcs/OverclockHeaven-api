@@ -53,6 +53,24 @@ public class UserService {
         return mapToDTO(user);
     }
 
+    public UserDTO removeProductFromCart (Integer productId, Integer id){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CustomExceptions.UserNotFoundException(id));
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomExceptions.ProductNotFoundException(productId));
+
+        if (user.getCart().contains(product)){
+            user.getCart().remove(product);
+        } else {
+            throw new CustomExceptions.NotInCartException();
+        }
+
+        userRepository.save(user);
+
+        return mapToDTO(user);
+    }
+
     public UserDTO completePurchase (Integer id){
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomExceptions.UserNotFoundException(id));

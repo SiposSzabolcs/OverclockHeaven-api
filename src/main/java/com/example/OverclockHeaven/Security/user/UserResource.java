@@ -44,9 +44,18 @@ public class UserResource {
     }
 
     @PostMapping("{id}/cart/add")
-    public ResponseEntity<?> getUserCart(@RequestBody Integer productId, @PathVariable(value = "id") Integer id) {
+    public ResponseEntity<?> addProductToCart(@RequestBody Integer productId, @PathVariable(value = "id") Integer id) {
         try {
             return ResponseEntity.ok().body(userService.addProductToCart(productId, id));
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+    @PostMapping("{id}/cart/remove")
+    public ResponseEntity<?> removeProductFromCart(@RequestBody Integer productId, @PathVariable(value = "id") Integer id) {
+        try {
+            return ResponseEntity.ok().body(userService.removeProductFromCart(productId, id));
         } catch (Exception e) {
             ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
