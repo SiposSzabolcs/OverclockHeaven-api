@@ -56,6 +56,7 @@ public class ProductService {
                 .orElseThrow(() -> new CustomExceptions.ProductNotFoundException(id));
         productRepository.delete(product);
         return new ProductDTO(
+                product.getId(),
                 product.getName(),
                 product.getTag(),
                 product.getPrice()

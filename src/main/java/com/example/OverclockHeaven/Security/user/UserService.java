@@ -83,7 +83,7 @@ public class UserService {
 
     public List<ProductDTO> mapToProductDTO(List<Product> products) {
         return products.stream()
-                .map(product -> new ProductDTO(product.getName(), product.getTag(), product.getPrice()))
+                .map(product -> new ProductDTO(product.getId(), product.getName(), product.getTag(), product.getPrice()))
                 .collect(Collectors.toList());
     }
 
