@@ -42,6 +42,7 @@ public class ProductResource {
     public ResponseEntity<?> createProduct(
             @RequestParam("file") MultipartFile imageFile,
             @RequestParam("name") String name,
+            @RequestParam("description") String description,
             @RequestParam("price") Double price,
             @RequestParam("tag") String tag) {
         try {
@@ -49,6 +50,7 @@ public class ProductResource {
             product.setName(name);
             product.setPrice(price);
             product.setTag(tag);
+            product.setDescription(description);
 
             Product createdProduct = productService.createProduct(product, imageFile);
             return ResponseEntity.created(URI.create("/products/" + createdProduct.getId())).body(createdProduct);
