@@ -1,6 +1,5 @@
 package com.example.OverclockHeaven.Security.user;
 
-import com.example.OverclockHeaven.Products.Product;
 import com.example.OverclockHeaven.Products.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;

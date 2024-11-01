@@ -1,6 +1,5 @@
 package com.example.OverclockHeaven.Security.user;
 
-import com.example.OverclockHeaven.Products.Product;
 import com.example.OverclockHeaven.global.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

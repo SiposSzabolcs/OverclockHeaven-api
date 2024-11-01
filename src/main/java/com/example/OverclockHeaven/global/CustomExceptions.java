@@ -44,12 +44,6 @@ public class CustomExceptions {
         }
     }
 
-    public static class JwtTokenExpiredException extends RuntimeException {
-        public JwtTokenExpiredException() {
-            super("JWT token has expired");
-        }
-    }
-
     public static class RatingAlreadyExistsException extends RuntimeException{
         public RatingAlreadyExistsException() { super("User has already rated this product."); }
     }

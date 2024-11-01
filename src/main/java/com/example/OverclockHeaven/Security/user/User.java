@@ -1,7 +1,6 @@
 package com.example.OverclockHeaven.Security.user;
 
 import com.example.OverclockHeaven.Products.Product;
-import com.example.OverclockHeaven.Products.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
