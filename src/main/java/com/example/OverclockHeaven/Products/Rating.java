@@ -8,17 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class Comment {
+public class Rating {
     @Id
     @GeneratedValue
     private Integer id;
 
     private Integer rating;
-    private String name;
-    private String content;
     private Integer userId;
-    private Integer productId;
 }

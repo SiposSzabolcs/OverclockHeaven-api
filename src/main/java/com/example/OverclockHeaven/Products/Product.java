@@ -26,7 +26,7 @@ public class Product {
     private String imgUrl;
     private Number price;
     @ElementCollection
-    private List<Integer> ratings = new ArrayList<>();
+    private List<Rating> ratings = new ArrayList<>();
 
     @ElementCollection
     private List<Comment> comments = new ArrayList<>();

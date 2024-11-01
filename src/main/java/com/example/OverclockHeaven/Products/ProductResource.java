@@ -22,13 +22,18 @@ public class ProductResource {
         return ResponseEntity.ok().body(productService.getAllProducts());
     }
 
+    @GetMapping("/sold/get")
+    public ResponseEntity<List> getSoldProducts(){
+        return ResponseEntity.ok().body(productService.getAllSoldProducts());
+    }
+
     @GetMapping("/get/{tag}")
     public ResponseEntity<List> getProducts(@PathVariable(value = "tag") String tag){
         return ResponseEntity.ok().body(productService.getProductByTag(tag));
     }
 
     @PostMapping("/rate/{id}")
-    public ResponseEntity<?> rateProduct(@PathVariable(value="id") Integer id, @RequestBody Integer rating){
+    public ResponseEntity<?> rateProduct(@PathVariable(value="id") Integer id, @RequestBody Rating rating){
         try{
             return ResponseEntity.ok().body(productService.rateProduct(rating, id));
         } catch (Exception e) {
@@ -75,6 +80,30 @@ public class ProductResource {
         try {
             ProductDTO deletedProductDTO = productService.deleteProduct(id);
             return ResponseEntity.ok(deletedProductDTO);
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateProduct(
+            @PathVariable(value = "id") Integer id,
+            @RequestParam(value = "file", required = false) MultipartFile imageFile,
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("price") Double price,
+            @RequestParam("tag") String tag) {
+        try {
+            Product updatedProduct = new Product();
+            updatedProduct.setId(id);
+            updatedProduct.setName(name);
+            updatedProduct.setDescription(description);
+            updatedProduct.setPrice(price);
+            updatedProduct.setTag(tag);
+
+            Product product = productService.updateProduct(updatedProduct, imageFile);
+            return ResponseEntity.ok().body(product);
         } catch (Exception e) {
             ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

@@ -3,6 +3,7 @@ package com.example.OverclockHeaven.Security.user;
 import com.example.OverclockHeaven.Products.Product;
 import com.example.OverclockHeaven.Products.ProductDTO;
 import com.example.OverclockHeaven.Products.ProductRepository;
+import com.example.OverclockHeaven.Products.ProductService;
 import com.example.OverclockHeaven.global.CustomExceptions;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final ProductService productService;
 
     public Page<UserDTO> getAllUsers(int page, int size) {
         Page<User> usersPage = userRepository.findAll(PageRequest.of(page, size, Sort.by("firstname")));
@@ -36,6 +39,7 @@ public class UserService {
                 .orElseThrow(() -> new CustomExceptions.UserNotFoundException(id));
         return mapToDTO(user);
     }
+
 
     public UserDTO addProductToCart (Integer productId, Integer id){
         User user = userRepository.findById(id)
@@ -79,7 +83,12 @@ public class UserService {
             throw new CustomExceptions.CartIsEmptyException();
         }
 
-        user.getPurchaseHistory().addAll(user.getCart());
+        for (Product cartItem : user.getCart()) {
+            productService.addSoldProduct(cartItem);
+            if (!user.getPurchaseHistory().contains(cartItem)) {
+                user.getPurchaseHistory().add(cartItem);
+            }
+        }
 
         user.getCart().clear();
 
