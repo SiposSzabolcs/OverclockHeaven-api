@@ -43,8 +43,8 @@ public class PaymentService {
         params.put("line_items", java.util.List.of(lineItem));
 
         params.put("mode", "payment");
-        params.put("success_url", "http://localhost:4200/success?session_id={CHECKOUT_SESSION_ID}");
-        params.put("cancel_url", "http://localhost:4200/cancel");
+        params.put("success_url", "https://overclockheaven.onrender.com/success/success?session_id={CHECKOUT_SESSION_ID}");
+        params.put("cancel_url", "https://overclockheaven.onrender.com");
 
         return Session.create(params);
     }
