@@ -29,10 +29,20 @@ public class User implements UserDetails {
     private String password;
     private Role role;
 
-    @ElementCollection
+    @ManyToMany
+    @JoinTable(
+            name = "user_cart",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> cart = new ArrayList<>();
 
-    @ElementCollection
+    @ManyToMany
+    @JoinTable(
+            name = "user_purchase_history",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> purchaseHistory = new ArrayList<>();
 
     @Override
